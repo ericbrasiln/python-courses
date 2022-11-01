@@ -96,7 +96,39 @@ if a \
 
 ```
 
-## Identifier names
+## Variable names
 
 >video 7
 
+- case-sensitive
+- **must** start with a letter or underscore
+- followed by letters, numbers, or underscores
+- cannot be a reserved word
+
+### Conventions
+
+- beginning with an underscore `_` for internal use
+- double underscore `__` for name mangling 
+- beginning and ending with double underscores `__` for special methods
+- package names: all lowercase, no underscores
+- modules: all lowercase, can have underscores
+- Classes: CapWords (upper camel case)
+- Functions: snake_case
+- Variables: snake_case
+- Constants: ALL_CAPS separated by underscores
+  
+## Conditionals
+
+>video 8
+
+### if / elif / else
+
+### Ternary operator
+
+```python
+x = 10 if a > 10 else 20
+```
+
+## Functions
+
+>video 9
