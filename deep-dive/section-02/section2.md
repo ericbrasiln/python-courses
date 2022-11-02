@@ -162,3 +162,116 @@ lambda x: x + 1
 ## While loop
 
 >video 10
+
+```python
+i = 5
+while i < 5:
+  print(i)
+  i += 1
+```
+
+### break
+
+Terminates the loop imidiatly
+
+```python
+ i = 5
+while True:
+    print(i)
+    if i >=5:
+      break
+      print('something')
+```
+
+e.g.
+
+```python
+min_length = 2
+name = input("Please enter your name: ")
+
+while not(len(name) >= min_lenght and name.isprintable() and name.isalpha()):
+  name = input("Please enter your name: ")
+
+print(f"Hello {name}")
+```
+
+or:
+
+```python
+min_length = 2
+while True:
+  name = input("Please enter your name: ")
+  if len(name) >= min_lenght and name.isprintable() and name.isalpha():
+    break
+print(f"Hello {name}")
+```
+
+### Continue statement
+
+- skips the rest of the current iteration
+
+```python
+a = 0 
+
+while a < 10:
+  a += 1
+  if a % 2 == 0:
+    continue
+  print(a)
+```
+
+## else clause in while loop
+
+```python
+l = [1,2,3]
+val = 10
+
+found = False
+idx = 0
+
+while idx < len(l):
+  if l[idx] == val:
+    found = True
+    break
+  idx += 1
+
+ifnot found:
+  l.append(val)
+
+print(l)
+```
+
+Now with `else`:
+
+```python
+l = [1,2,3]
+va = 10
+idx = 0
+while idx < len(l):
+  if l[idx] == val:
+    break
+  idx += 1
+else:
+  l.append(val)
+print(l)
+```
+
+## Break, continues and try statements
+
+>video 11
+
+- try, except, finally
+- finally is always executed
+
+```python
+a = 10
+b = 1
+try:
+  a/b
+except ZeroDivisionError:
+  print('division by zero')
+finally:
+  print('always executed')
+```
+
+
