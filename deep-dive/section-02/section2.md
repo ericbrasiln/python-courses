@@ -132,3 +132,33 @@ x = 10 if a > 10 else 20
 ## Functions
 
 >video 9
+
+- built-in functions: e.g. `len()`
+- To create a function, use the `def` keyword; followed by the function name, parentheses, and a colon
+
+```python
+def func_1():
+  a + b
+```
+
+- functions inside functions
+
+```python
+def func_2():
+  return func_3()
+
+def func_3():
+  print('hello')
+```
+
+### lambda functions
+
+- anonymous functions
+
+```python
+lambda x: x + 1
+```
+
+## While loop
+
+>video 10
