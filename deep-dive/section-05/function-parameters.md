@@ -339,4 +339,6 @@ func()
 => kwargs = {}
 
 
+## Putting it all together
 
+![](Captura%20de%20tela%20de%202023-11-01%2010-17-48.png)
