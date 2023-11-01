@@ -230,3 +230,113 @@ this will not work: func2(l)
 But we can unpack the list first and then pass it to the function:
 
 func2(*l) => a = 10 b = 20 c = 30
+
+## Mandatory keyword Arguments
+
+def func(a, b, *args, d)
+
+In this case, *args effectively exhauts all positional arguments and `d` must be passed as a keyword (named) argument.
+
+func(1, 2, 'x', 'y', d = 100)
+
+=> a = 1 b = 2 args = ('x', 'y') d = 100
+
+func(1,2, d = 100)
+
+=> a = 1 b = 2 args = () d = 100
+
+func(1,2)
+
+=> error!
+
+- we can omit any mandatory positional arguments:
+
+def func(*args, d = 100):
+    # code
+
+func(1, 2, 3, d = 100)
+
+=> args = (1, 2, 3) d = 100
+
+func(d = 100)
+
+=> args = () d = 100
+
+- force no positional argumets:
+
+`*` indicates the 'end' of positional arguments
+
+def func(*, d):
+    #code
+
+func(1,2,3, d = 100)
+
+=> Exception!
+
+func(d=100)
+
+=> d = 100
+
+- Putting it together
+
+def func1(a, b=1, *args, d, e=True):
+    #code
+
+def func2(a, b=1, *, d, e=True):
+    #code
+
+func1 and func2:
+
+- a: mandatory positional argument
+- b = optional positionial argument, defaults to 1
+- args: 
+        - func1: catch-all for any (optional) additional positional arguments
+        - func2: no additional positional argumets allowed
+- d: mandatory keyword argument
+- e: optional keyword argument, defaults to True
+
+## **kwargs
+
+is used to scoop up a variable amount of remaining keyword arguments
+ and stored a dictionary.
+
+**kwargs can be specified even if the positional arguments have not beeen axhausted (unlike keyword-only arguments).
+
+no parameters can come after **kwargs.
+
+def func(*, d, **kwargs):
+    #code
+
+func(d=1, a=2, b=3)
+
+d = 1
+kwargs = {'a': 1, 'b': 3}
+
+func(d=1)
+
+d = 1
+kwargs = {}
+
+
+def func(**kwargs):
+    #code
+
+func(a=1, b=2, c=3) => kwargs = {'a':1, 'b': 2, 'c': 3}
+func() => kwargs = {}
+
+
+def func(*args, **kwargs):
+    #code
+
+func(1, 2, a=10, b=20)
+
+=> args = (1, 20)
+=> kwargs = {'a': 10, 'b': 20}
+
+func()
+
+=> args = ()
+=> kwargs = {}
+
+
+
