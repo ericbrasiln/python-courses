@@ -130,3 +130,163 @@ lambdas are not equivalent to closures.
 - no annotations
 - single line of code
 
+## Lambda and Sorting
+
+See [lambda_sorting.py](lambda_sorting.py)
+
+## Challenge: randomly sort a list
+
+See [challenge_sorted.py](challenge_sorted.py)
+
+## Function introspection
+
+Functions are first-class objects, so they have attributes.
+
+We can attach our own attributes to functions.
+
+```python
+def my_func(a, b):
+    return a + b
+
+my_func.category = 'math'
+my_func.sub_category = 'arithmetic'
+
+print(my_func.category) # math
+print(my_func.sub_category) # arithmetic
+```
+
+The `dir()` is a bulti-in function that returns the list of attributes of an object.
+
+```python
+dir(my_func)
+```
+
+### Function attributes
+
+- `__doc__`: docstring
+- `__annotations__`: annotations
+- `__name__`: name of the function
+- `__defaults__`: tuple containing positional parameter defaults
+- `__kwdefaults__`: dictionary containing keyword-only parameter defaults
+- `__code__`: code object representing the compiled function body, and thi object has many attributes
+  - `co_varnames`: tuple containing parameter names and local variables => `my_func.__code__.co_varnames` => `('a', 'b')`
+  - `co_argcount`: number of parameters (not including * and ** args) => `my_func.__code__.co_argcount` => `2`
+
+### `inspect` module
+
+```python
+import inspect
+```
+
+What's the difference between a function and a method?
+
+Classes and objects have attribtes - a n object that is bopund (to the class or the object).
+
+An attribute that is calable, is called a method.
+
+```python
+def my_func(): # this function is not bound to anything. It is a function.
+    pass
+
+def_MyClass(): 
+    def func(self): # this function is bound to an instance of the class. So it is a method and not a function.
+        pass
+
+my_object = MyClass()
+```
+
+Use inspect to know if an object is a function or a method:
+
+```python
+inspect.isfunction(my_func) # True
+inspect.ismethod(my_func) # False
+inspect.isfunction(func) # False
+inspect.ismethod(func) # True
+
+inspect.isfunction(my_object.func) # False
+inspect.ismethod(my_object.func) # True
+
+inspect.isroutine(my_func) # True
+inspect.isroutine(func) # True
+inspect.isroutine(my_object.func) # True
+``` 
+
+### Code introspection
+
+We can recover the source code of our functions/methods.
+
+```python
+import inspect
+
+inspect.getsource(my_func) # a string containing our entire def statement, including the docstring, annotations, etc.
+```
+
+We can find out in which module our function was created.
+
+
+```python
+inspect.getmodule(my_func) # <module '__main__'>
+
+inspect.getmodule(print) # <module 'builtins' (built-in)>
+
+inspect.getmodule(math.sin) # <module 'math' (built-in)>
+```
+
+### Function Comments
+
+```python
+# setting up a varible
+i = 10
+
+# TODO: Implement function
+# some additional notes
+def my_func(a, b=1):
+    # comment inside my_func
+    pass
+
+inspect.getcomments(my_func) # '# TODO: Implement function\n# some additional notes\n'
+```
+
+### Callable signatures
+
+```python
+import inspect
+
+inspect.signature(my_func)
+```
+
+Contains an attribute called parameters.
+
+Esentially a dictionary of parameter names (keys) and mertadaa about the parameter (values).
+
+- keys: parameter names
+- values: objects with attributes such as name, default, annotatoin, kind.
+
+`kind`:
+
+- POSITIONAL_OR_KEYWORD
+- VAR_POSITIONAL (for *args)
+- KEYWORD_ONLY 
+- VAR_KEYWORD (for **kwargs)
+- POSITIONAL_ONLY (we cannot define it in python)
+
+```python
+import inspect
+
+def my_func(:a 'a string',
+            b: int = 1,
+            *args: 'additional positional arguments',
+            kw1: 'first keyword-only argument',
+            kw2: 'second keyword-only argument' = 10,
+            **kwargs: 'additional keyword-only arguments') -> str:
+    """does something
+       or other"""
+    pass
+
+for param in inspect.signature(my_func).parameters.values():
+    print('Name:', param.name)
+    print('Default:', param.default)
+    print('Annotation:', param.annotation)
+    print('Kind:', param.kind)
+```
+
