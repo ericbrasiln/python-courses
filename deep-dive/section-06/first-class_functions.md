@@ -1,6 +1,6 @@
 # First-class functions
 
-- can be passed toa function as an argument
+- can be passed to a function as an argument
 - can be returned from a function
 - can be assigned to a variable
 - can be stored in a data structure (such as list, tuple, dictionary, etc.)
@@ -21,7 +21,7 @@ Functions (function) are also first-class objects in Python.
 3. callables
 4. function introspection
 5. built-in higher-order functions (such as sorted, map, filter)
-6. some functions in the functools module (such as redduce, all, any)
+6. some functions in the functools module (such as reduce, all, any)
 7. partials
 
 ## 1. function annotation and documentation
@@ -289,4 +289,160 @@ for param in inspect.signature(my_func).parameters.values():
     print('Annotation:', param.annotation)
     print('Kind:', param.kind)
 ```
+
+## Callables
+
+- Any objects that can be called using the `()` operator.
+- callables always return a value
+- functions and methods, but it goes beyond
+
+To see if a object is callable, we can use the built-in function: callable => `callable(print)` => True
+
+### Different types of Callables
+
+- built-in functions
+- built-tin methods
+- user-defined functions
+- methods
+- classes
+- class instances
+- generators, coroutines, asynchronous generators
+
+## MAP, FILTER, ZIP
+
+- Higher order functions: a function that takes a function as a parameter and/or returns a function as its return value
+
+### The map function
+
+```python
+map(func, *iterables)
+```
+
+- *iterables: a variable number of iterable objects
+- func: some function that thakes as mnany arguments as ther are iterable objetcs passed to `iterables`
+
+Map returns an iterator that calculates the function applied to each elemnet of the iterables
+
+the iterator stops as soon as one of the iterables has been exhausted so, unequal length iterables can be used.
+
+```python
+l = [2, 3, 4]
+
+def sq(x):
+    return x**2
+
+list(map(sq, l)) # [4, 9, 16]
+```
+
+```python
+l = [1, 2, 3]
+l2 = [10, 20, 30]
+
+def add(x, y):
+    return x + y
+
+list(map(add, l,l2)) # [11, 22, 33]
+```
+
+# Filter function
+
+`filter(func, iterable)` 
+
+Will return an iterator that contains all the elments of the iterable for which the function called on it is Truthy.
+
+If the function is None, it simply returns the elements of the iterable that are Truthy.
+
+```python
+l = [0, 1, 2, 3, 4]
+
+list(filter(None, l))) # [1, 2, 3, 4]
+
+def is_even(n):
+    return n % 2 == 0
+
+list(filter(is_even, l)) # [0, 2, 4]
+
+list(filter(lambda n: n % 2 == 0, l)) # [0, 2, 4]
+
+
+## zip function
+
+`zip(*iterables)`
+
+[1, 2 , 3]
+[10, 20, 30]
+
+zip => (1, 20), (2, 20), (3, 30)
+
+```python
+l1 = [1, 2, 3]
+l2 = [10, 20, 30]
+l3 = 'python'
+
+list(zip(l1, l2, l3)) # [(1, 10, 'p'), (2, 20, 'y'), (3, 30, 't')]
+
+l1 = range(100)
+l2 = 'abcd'
+
+list(zip(l1, l2)) # [(0,'a'), (1, 'b'), (2, 'c'), (3, 'd')]
+
+## List comprehension alternative to map
+
+l = [2, 3, 4]
+
+def sq(x):
+    return x**2
+
+list(map(sq, l)) # [4, 9, 16]
+
+or
+
+resut = []
+for x in l:
+    result.append(x**2) # [4, 9, 16]
+
+using list comprehension:
+
+```python
+[x**2 for x in l] # [4, 9, 16]
+
+# [<expression> for <varname> in <iterable>]
+```
+
+an example using list comprehension + zip()
+
+```python
+
+l1 = [1, 2, 3]
+l2 = [10, 20, 30]
+
+list(map(lambda x,y: x + y, l1, l2) # [11, 22, 33]
+
+[x + y for x, y in zip(l1, l2)] # [11, 22, 33]
+```
+
+### List comprehension alternative to filter
+
+```python
+l= [1, 2, 3, 4]
+
+list(filter(lambda n: n % 2 ==0, l) # [2, 4]
+
+[x for x in l if x % 2 == 0] # [2, 4]
+# [<expression1> for <varname> in <iterable> if <expression2>]
+```
+
+#### Combining map and filter
+
+```python
+l = range(10)
+list(lambda y: y < 25, map(lambda x: x**2, l))) # [0, 1, 4, 9, 16]
+```
+
+Using list comprehension:
+
+```python
+[x**2 for x in range(10) if x**2 < 25] # [0, 1, 4, 9, 16]
+
+
 
