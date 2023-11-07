@@ -443,6 +443,72 @@ Using list comprehension:
 
 ```python
 [x**2 for x in range(10) if x**2 < 25] # [0, 1, 4, 9, 16]
+```
 
+## Reducing functions
+
+The functools module: python implements a reduce function that will handle any iterable.
+
+```python
+from functools import reduce
+
+l = [5, 8, 6, 10, 9]
+
+reduce(lambda a, b: a if a > b else b, l) # max => 10
+reduce(lambda a, b: a if a > b else b, l) # max => 5
+reduce(lambda a, b: a + b, l) # sum => 38
+```
+
+### Built-in reducing functions
+
+- min
+- max
+- sum
+- any => True if any element in l is truthy. False otherwise
+- all => True if every element in l is truthy. False otherwise.
+
+
+## Partial Function
+
+Reducing function arguments
+
+```python
+def my_func(a, b, c):
+    print(a, b, c)
+
+def fn(b, c):
+    return my_func(10, b, c)
+
+fn(20, 30) #10, 20, 30
+
+f = lambda b, c: my_func(10, b, c)
+
+f(20, 30) # 10, 20, 30
+```
+
+### Using partial function
+
+```python
+from functools import partial
+
+f = partial(my_func, 10)
+
+f(20, 30) # 10, 20, 30
+```
+
+- handling more complex arguments
+
+```python
+def my_func(a, b, *args, k1, k2, **kwargs):
+    print(a, b, args, k1, k2, kwargs)
+
+
+
+def f(b, *args, k2, **kwargs):
+    return my_func(10, b, *args, k1='a', k2=k2, **kwargs)
+
+
+f = partial(my_func, 10, k1='a')
+```
 
 
