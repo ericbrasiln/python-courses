@@ -511,4 +511,116 @@ def f(b, *args, k2, **kwargs):
 f = partial(my_func, 10, k1='a')
 ```
 
+## The operator module
 
+### Arithmetic Functions
+
+- add(a, b)
+- mul(a, b)
+- pow(a, b)
+- mod(a, b)
+- floordiv(a, b)
+- neg(a, b)
+- and many more...
+
+### Comparison and Boolean Operators
+
+- lt(a, b): less than
+- le(a, b):
+- is_(a, b)
+- gt(a, b)
+- ge(a, b)
+- is_not(a, b)
+- eq(a, b)
+- ne(a, b)
+- and_(a, b)
+- or_(a, b)
+- not_(a, b)
+
+### Sequence / Mapping Operator
+
+- concat(s1, s2)
+- contains(s, val)
+- countOf(s, val)
+- getitem(s, i)
+- setitem(s, i, val)
+- delitem(s, i)
+
+#### Item getters
+
+The intemgetter function returns a callable.
+
+getitem(s, l) takes two parameters, and returns a value: s[i]
+
+```python
+s = [1, 2, 3]
+
+getitem(s, 1) # 2
+```
+
+itemgetter(i) returns a callable which takes one parameter: a sequence object
+
+```python
+f = itemgetter(1)
+
+s = [1, 2, 3]
+
+f(s) # 2
+
+s =  'python'
+f(s) # 'y'
+```
+
+We can pass more than one index to itemgetter:
+
+
+```python
+
+l = [1, 2, 3, 4, 5, 6]
+s =  'python' 
+
+f = itemgetter(1, 3, 4)
+
+f(l) # (2, 4, 5)
+
+f(s) # ('y', 'h', 'o')
+```
+
+#### Attribute getters
+
+The `attrgetter` fucntion is similar to itemgetter, but is used to retrieve object attributes.
+
+It also returns a callable, that takes the object as an argument.
+
+Suppose `my_obj` is an object with three properties:
+
+```python
+my_obj.a #10
+my_obj.b #20
+my_obj.c #30
+
+f = attrgetter('a')
+
+f(my_obj) # 10
+
+f = attrgetter('a', 'b') #(10, 20)
+```
+
+- Calling another callable
+
+Consider the str class that provides the upper() method:
+
+s = 'python'
+
+s.upper() # PYTHON
+
+f = attrgetter('upper')
+
+f(s) => returns the upper method of s. It is a callable, and can be called using ()
+
+f(s)() => PYTHON
+attrgetter('upper')(s)() => PYTHON
+
+Or, we can use the slightly simpler `methodcaller`function
+
+methodcaller('upper')('python') => PYTHON
